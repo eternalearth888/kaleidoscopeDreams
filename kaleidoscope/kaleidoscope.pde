@@ -18,7 +18,7 @@ float satMod = 0;
  
 void setup()
 {
-  size(800, 600, P3D);
+  size(1280, 600, P3D);
   colorMode(HSB);
   background(0);
   textureMode(NORMAL);
@@ -254,20 +254,19 @@ void mousePressed()
   randomize();
 }
  
-//void keyPressed()
-//{
-//  if (key == ' ') isPaused = !isPaused;
-//  if (key == 's') save();
-//  if (key == 't') showTexture = !showTexture;
-//  if (key == 'g') showLines = !showLines;
-//  if (key == 'c') cluster.randomizeColor();
-//  if (key == 'a') cycleAxisMode();
-//  if (key == 'z') cycleZoom();
-//  if (key == 'r') cluster.createParts();
-//  if (key == '=') speedMod *= 1.2;
-//  if (key == '-') speedMod *= 0.8;
-//  if (key == 'l') darkStroke = !darkStroke;
-//}
+void keyPressed()
+{
+  if (key == ' ') isPaused = !isPaused;
+  if (key == 't') showTexture = !showTexture;
+  if (key == 'g') showLines = !showLines;
+  if (key == 'c') cluster.randomizeColor();
+  if (key == 'a') cycleAxisMode();
+  if (key == 'z') cycleZoom();
+  if (key == 'r') cluster.createParts();
+  if (key == '=') speedMod *= 1.2;
+  if (key == '-') speedMod *= 0.8;
+  if (key == 'l') darkStroke = !darkStroke;
+}
  
 class Cluster
 {
