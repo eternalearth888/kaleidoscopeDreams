@@ -9,16 +9,19 @@ boolean showLines = false;
 int axisMode = 1;
 float speedMod = 1;
 boolean darkStroke = true;
-float texWidth;
+float texWidth; 
 float texHeight;
 float uv0, uv1;
 float angleStep = 0.0;
  
 float satMod = 0;
  
+import processing.serial.*; 
+Serial myPort;
+ 
 void setup()
 {
-  size(1280, 600, P3D);
+  size(1366, 700, P3D);
   colorMode(HSB);
   background(0);
   textureMode(NORMAL);
@@ -26,10 +29,37 @@ void setup()
   angleStep = radians(360/numSlices);
   calculateGrid();
   cluster = new Cluster();
+  
+ printArray(Serial.list());
+  myPort = new Serial(this, Serial.list()[0], 115200);
+
 }
  
 void draw()
 { 
+  while (myPort.available() > 0) {
+    String inBuffer = trim(myPort.readString()); 
+    
+    if (inBuffer != null) {
+        if (inBuffer.equals("A") == true) {
+          println(inBuffer);
+      
+          randomize();
+        }
+        if (inBuffer.equals("B") == true) {
+          println(inBuffer);
+      
+          cluster.randomizeColor();
+        }
+        if (inBuffer.equals("AB") == true) {
+          println(inBuffer);
+      
+         cycleAxisMode(); 
+        }
+    }
+    
+  }
+  
   background(0);
   if (showLines) stroke(0);
   else noStroke();
@@ -251,7 +281,7 @@ void cycleZoom()
  
 void mousePressed()
 {
-  randomize();
+   randomize();
 }
  
 void keyPressed()
@@ -369,6 +399,8 @@ class Part
   void randomizeColor()
   {
     hue = random(255);
+    // send the value of hue to the arduino to color the LEDS
+    // the same color
     hueSpeed = random(0.01, 0.2);
  
     satOsc = random(100);
